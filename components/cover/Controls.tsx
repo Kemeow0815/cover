@@ -261,10 +261,10 @@ export default function Controls() {
     <div className="w-full md:w-80 h-1/2 md:h-full border-t md:border-t-0 md:border-r bg-background flex flex-col shadow-lg z-10">
       <div className="p-4 border-b">
         <h1 className="text-xl font-bold flex items-center gap-2">
-           EasyCover - AcoFork
+           Cover Generator - Ke Miao
         </h1>
         <p className="text-xs text-muted-foreground mt-1">
-            简单、优雅的纯客户端封面图生成器。无需上传，保护隐私。
+            我的封面生成器~
         </p>
       </div>
       
@@ -311,9 +311,12 @@ export default function Controls() {
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">文字设置</h3>
             <div className="space-y-2">
               <Label>内容</Label>
-              <Input 
-                value={store.text.content} 
-                onChange={(e) => store.updateText({ content: e.target.value })} 
+              <textarea
+                value={store.text.content}
+                onChange={(e) => store.updateText({ content: e.target.value })}
+                rows={3}
+                className="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive resize-none"
+                placeholder="输入封面标题，支持多行"
               />
             </div>
             

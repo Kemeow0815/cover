@@ -13,10 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EasyCover - AcoFork",
-  description: "EasyCover - AcoFork",
+  title: "Cover Generator - Ke Miao",
+  description: "Cover Generator - Ke Miao",
   icons: {
-    icon: "https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&spec=0",
+    icon: "https://wsrv.nl/?url=github.com%2FKemeow0815.png",
   },
 };
 
