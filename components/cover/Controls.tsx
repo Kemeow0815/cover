@@ -308,8 +308,58 @@ export default function Controls() {
       store.updateText(updates);
   };
 
+  const [panelWidth, setPanelWidth] = React.useState(320);
+  const isResizing = React.useRef(false);
+
+  const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    isResizing.current = true;
+    const startX = e.clientX;
+    const startWidth = panelWidth;
+
+    const onMouseMove = (ev: MouseEvent) => {
+      if (!isResizing.current) return;
+      const newWidth = Math.min(Math.max(startWidth + (ev.clientX - startX), 260), 800);
+      setPanelWidth(newWidth);
+    };
+
+    const onMouseUp = () => {
+      isResizing.current = false;
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, [panelWidth]);
+
+  const panelRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const el = panelRef.current;
+    if (!el) return;
+    const mq = window.matchMedia('(min-width: 768px)');
+    const apply = () => {
+      el.style.width = mq.matches ? `${panelWidth}px` : '';
+    };
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, [panelWidth]);
+
   return (
-    <div className="w-full md:w-80 flex-1 md:h-full border-t md:border-t-0 md:border-r bg-background flex flex-col shadow-lg z-10 min-h-0">
+    <div
+      ref={panelRef}
+      className="w-full flex-1 md:flex-none md:h-full border-t md:border-t-0 bg-background flex flex-col shadow-lg z-10 min-h-0 relative"
+    >
+      <div
+        className="hidden md:block absolute top-0 right-0 w-1.5 h-full cursor-col-resize hover:bg-primary/20 active:bg-primary/30 z-20"
+        onMouseDown={handleMouseDown}
+      />
       <div className="flex-1 min-h-0 w-full">
         <ScrollArea className="h-full">
             <div className="p-4 space-y-6">
